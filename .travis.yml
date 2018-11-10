@@ -7,7 +7,7 @@ script:
   - npm test
 before_deploy:
   - npm run build
-  - cd dist; zip -r build.zip ./*; cd -
+  - zip -j -r build.zip dist/* 
 deploy:
   provider: lambda
   function_name: "randommet-alexa_lambda"
