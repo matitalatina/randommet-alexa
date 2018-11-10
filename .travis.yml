@@ -16,3 +16,5 @@ deploy:
   runtime: "nodejs8.10"
   handler_name: "handler"
   zip: build.zip
+  on:
+    branch: master
