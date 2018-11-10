@@ -1,16 +1,14 @@
+import { IColorRequest } from "./colors/IColorHandlerInput";
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
-import "source-map-support/register";
 import { ErrorHandler, HandlerInput, SkillBuilders } from "ask-sdk-core";
 import { CustomSkillErrorHandler } from "ask-sdk-core/dist/dispatcher/error/handler/CustomSkillErrorHandler";
 import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/handler/CustomSkillRequestHandler";
 import { sample } from "lodash";
-import { ColorRepo } from "./ColorRepo";
-
-// =========================================================================================================================================
-// TODO: The items below this comment need your attention.
-// =========================================================================================================================================
+import "source-map-support/register";
+import { ColorRepo } from "./colors/ColorRepo";
+import { ColorService } from "./colors/IColorService";
 
 const SKILL_NAME = "RandomMet";
 const GET_FACT_MESSAGE = "Ecco qui la scelta: ";
@@ -20,16 +18,6 @@ const FALLBACK_MESSAGE = "Non posso aiutarti in questo. Posso scegliere dei colo
 const FALLBACK_REPROMPT = "Come posso aiutarti?";
 const STOP_MESSAGE = "Arrivederci!";
 
-// =========================================================================================================================================
-// TODO: Replace this data with your own.  You can find translations of this data at http://github.com/alexa/skill-sample-nodejs-fact/tree/en-US/lambda/data
-// =========================================================================================================================================
-
-const data = new ColorRepo().getColors();
-
-// =========================================================================================================================================
-// Editing anything below this line might break your skill.
-// =========================================================================================================================================
-
 const GetRandomColorHandler = {
   canHandle(handlerInput: HandlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -37,7 +25,9 @@ const GetRandomColorHandler = {
       && request.intent.name === "RandomColor";
   },
   handle(handlerInput: HandlerInput) {
-    const randomFact = sample(data) || "Rosso";
+    const request: IColorRequest = (handlerInput.requestEnvelope.request as any) as IColorRequest;
+    const randomFact = new ColorService(new ColorRepo())
+      .getRandomColor(parseInt(request.intent.slots.color_count.value, 10)).join(", ");
     const speechOutput = GET_FACT_MESSAGE + randomFact;
 
     return handlerInput.responseBuilder

@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "8"
+install:
+  - npm install
+script:
+  - npm test
+before_deploy:
+  - npm run build
+  - zip build.zip dist/*
+deploy:
+  provider: lambda
+  function_name: "randommet-alexa_lambda"
+  region: "eu-central-1"
+  role: "arn:aws:iam::0123456789012:role/lambda_basic_execution"
+  runtime: "nodejs8.10"
+  handler_name: "index.handler"
+  zip: build.zip
