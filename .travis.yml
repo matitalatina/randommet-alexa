@@ -14,5 +14,5 @@ deploy:
   region: "eu-west-1"
   role: "arn:aws:iam::636133167487:role/service-role/randommet-alexa_role"
   runtime: "nodejs8.10"
-  handler_name: "index.handler"
+  handler_name: "handler"
   zip: build.zip
