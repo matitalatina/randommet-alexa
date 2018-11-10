@@ -12,7 +12,7 @@ deploy:
   provider: lambda
   function_name: "randommet-alexa_lambda"
   region: "eu-central-1"
-  role: "arn:aws:iam::0123456789012:role/lambda_basic_execution"
+  role: "arn:aws:iam::636133167487:role/service-role/randommet-alexa_role"
   runtime: "nodejs8.10"
   handler_name: "index.handler"
   zip: build.zip
