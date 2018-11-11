@@ -3,11 +3,19 @@ import { sampleSize } from "lodash";
 import "reflect-metadata";
 import { NotEnoughChoicesError } from "./NotEnoughChoicesError";
 
-const conjunctions: string[] = [
+const uselessWords: string[] = [
   "o",
   "oppure",
   "e",
   "ovvero",
+  "il",
+  "lo",
+  "la",
+  "i",
+  "gli",
+  "le",
+  "un",
+  "qualche",
 ];
 
 @injectable()
@@ -15,7 +23,7 @@ export class ChoiceService {
   public extractChoices(choiceQuery: string): string[] {
     return choiceQuery
       .split(" ")
-      .filter((c) => !conjunctions.includes(c));
+      .filter((c) => !uselessWords.includes(c));
   }
   public chooseElementFromQuery(count: number, query: string): string[] {
     const availableChoices = this.extractChoices(query);
