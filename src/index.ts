@@ -1,3 +1,4 @@
+import { ChoiceRequestHandler } from "./choice/ChoiceRequestHandler";
 import { IColorRequest } from "./colors/IColorHandlerInput";
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
@@ -8,7 +9,9 @@ import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/
 import { sample } from "lodash";
 import "source-map-support/register";
 import { ColorRepo } from "./colors/ColorRepo";
-import { ColorService } from "./colors/IColorService";
+import { ColorService } from "./colors/ColorService";
+import { myContainer } from "./di/inversify.config";
+import { TYPES } from "./di/types";
 
 const SKILL_NAME = "RandomMet";
 const GET_FACT_MESSAGE = "Ecco qui la scelta: ";
@@ -27,7 +30,7 @@ const GetRandomColorHandler = {
   handle(handlerInput: HandlerInput) {
     const request: IColorRequest = (handlerInput.requestEnvelope.request as any) as IColorRequest;
     const randomFact = new ColorService(new ColorRepo())
-      .getRandomColor(parseInt(request.intent.slots.color_count.value, 10)).join(", ");
+      .getRandomColor(parseInt(request.intent.slots.colorCount.value, 10)).join(", ");
     const speechOutput = GET_FACT_MESSAGE + randomFact;
 
     return handlerInput.responseBuilder
@@ -112,6 +115,7 @@ const skillBuilder = SkillBuilders.custom();
 
 exports.handler = skillBuilder
   .addRequestHandlers(
+    myContainer.get<ChoiceRequestHandler>(TYPES.ChoiceRequestHandler),
     GetRandomColorHandler,
     HelpHandler,
     ExitHandler,

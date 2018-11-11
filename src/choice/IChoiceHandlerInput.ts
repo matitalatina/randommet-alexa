@@ -1,9 +1,15 @@
-export interface IColorRequest {
+export interface IChoiceHandlerRequest {
   intent: {
     name: string,
     confirmationStatus: string,
     slots: {
-      colorCount: {
+      choiceQuery: {
+        name: string,
+        value: string,
+        confirmationStatus: string,
+        source: string,
+      },
+      choiceCount: {
         name: string,
         value: string,
         confirmationStatus: string,

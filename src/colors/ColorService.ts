@@ -1,10 +1,14 @@
+import { inject, injectable } from "inversify";
 import { sampleSize } from "lodash";
+import "reflect-metadata";
+import { TYPES } from "../di/types";
 import { ColorRepo } from "./ColorRepo";
 
+@injectable()
 export class ColorService {
   private colorRepo: ColorRepo;
 
-  constructor(colorRepo: ColorRepo) {
+  constructor(@inject(TYPES.ColorRepo) colorRepo: ColorRepo) {
     this.colorRepo = colorRepo;
   }
 

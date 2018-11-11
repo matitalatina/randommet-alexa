@@ -1,5 +1,8 @@
+import { injectable } from "inversify";
 import { keys } from "lodash";
+import "reflect-metadata";
 
+@injectable()
 export class ColorRepo {
   public getColors(): string[] {
     return keys({
