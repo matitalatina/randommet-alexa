@@ -1,11 +1,12 @@
 import { HandlerInput } from "ask-sdk-core";
 import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/handler/CustomSkillRequestHandler";
 import { Response } from "ask-sdk-model";
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { TYPES } from "../di/types";
 import { ChoiceService } from "./ChoiceService";
 import { IChoiceHandlerRequest } from "./IChoiceHandlerInput";
 
+@injectable()
 export class ChoiceRequestHandler implements CustomSkillRequestHandler {
   private choiceService: ChoiceService;
 

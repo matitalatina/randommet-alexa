@@ -113,7 +113,7 @@ const ErrorHandler: CustomSkillErrorHandler = {
 
 const skillBuilder = SkillBuilders.custom();
 
-exports.handler = skillBuilder
+const handler = skillBuilder
   .addRequestHandlers(
     myContainer.get<ChoiceRequestHandler>(TYPES.ChoiceRequestHandler),
     GetRandomColorHandler,
@@ -124,3 +124,5 @@ exports.handler = skillBuilder
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
+
+export { handler };
