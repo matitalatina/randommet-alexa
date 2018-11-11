@@ -22,9 +22,6 @@ describe("ChoiceRequestHandler", () => {
           intent: {
             slots:
             {
-              choiceCount: {
-                value: "1",
-              },
               choiceQuery: {
                 value: "bar ristorante",
               },

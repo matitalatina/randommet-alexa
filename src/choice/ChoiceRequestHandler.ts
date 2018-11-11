@@ -23,7 +23,7 @@ export class ChoiceRequestHandler implements CustomSkillRequestHandler {
     const request: IChoiceHandlerRequest = (input.requestEnvelope.request as any) as IChoiceHandlerRequest;
     console.log(input.responseBuilder);
     const randomFact = this.choiceService.chooseElementFromQuery(
-      parseInt(request.intent.slots.choiceCount.value || "1", 10),
+      1,
       request.intent.slots.choiceQuery.value,
     );
     console.log(randomFact);

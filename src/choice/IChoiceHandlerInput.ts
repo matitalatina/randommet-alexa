@@ -9,12 +9,6 @@ export interface IChoiceHandlerRequest {
         confirmationStatus: string,
         source: string,
       },
-      choiceCount: {
-        name: string,
-        value: string,
-        confirmationStatus: string,
-        source: string,
-      },
     },
   };
 }
