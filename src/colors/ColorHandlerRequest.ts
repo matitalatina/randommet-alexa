@@ -1,9 +1,11 @@
-export interface IChoiceHandlerRequest {
+import { Request } from "ask-sdk-model";
+
+export type ColorRequest = Request & {
   intent: {
     name: string,
     confirmationStatus: string,
     slots: {
-      choiceQuery: {
+      colorCount: {
         name: string,
         value: string,
         confirmationStatus: string,
@@ -11,4 +13,4 @@ export interface IChoiceHandlerRequest {
       },
     },
   };
-}
+};

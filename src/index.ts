@@ -1,12 +1,11 @@
 import { ChoiceRequestHandler } from "./choice/ChoiceRequestHandler";
-import { IColorRequest } from "./colors/IColorHandlerInput";
+import { ColorRequest } from "./colors/ColorHandlerRequest";
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
 import { ErrorHandler, HandlerInput, SkillBuilders } from "ask-sdk-core";
 import { CustomSkillErrorHandler } from "ask-sdk-core/dist/dispatcher/error/handler/CustomSkillErrorHandler";
 import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/handler/CustomSkillRequestHandler";
-import { sample } from "lodash";
 import "source-map-support/register";
 import { ColorRepo } from "./colors/ColorRepo";
 import { ColorService } from "./colors/ColorService";
@@ -28,7 +27,7 @@ const GetRandomColorHandler = {
       && request.intent.name === "RandomColor";
   },
   handle(handlerInput: HandlerInput) {
-    const request: IColorRequest = (handlerInput.requestEnvelope.request as any) as IColorRequest;
+    const request: ColorRequest = handlerInput.requestEnvelope.request as ColorRequest;
     const randomFact = new ColorService(new ColorRepo())
       .getRandomColor(parseInt(request.intent.slots.colorCount.value, 10)).join(", ");
     const speechOutput = GET_FACT_MESSAGE + randomFact;
