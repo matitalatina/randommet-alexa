@@ -1,5 +1,4 @@
 import { ChoiceRequestHandler } from "./choice/ChoiceRequestHandler";
-import { ColorRequest } from "./colors/ColorHandlerRequest";
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
@@ -7,37 +6,15 @@ import { ErrorHandler, HandlerInput, SkillBuilders } from "ask-sdk-core";
 import { CustomSkillErrorHandler } from "ask-sdk-core/dist/dispatcher/error/handler/CustomSkillErrorHandler";
 import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/handler/CustomSkillRequestHandler";
 import "source-map-support/register";
-import { ColorRepo } from "./colors/ColorRepo";
-import { ColorService } from "./colors/ColorService";
+import { RandomColorHandler } from "./colors/RandomColorHandler";
 import { myContainer } from "./di/inversify.config";
 import { TYPES } from "./di/types";
 
-const SKILL_NAME = "RandomMet";
-const GET_FACT_MESSAGE = "Ecco qui la scelta: ";
 const HELP_MESSAGE = "Scegli un colore";
 const HELP_REPROMPT = "Come posso aiutarti?";
 const FALLBACK_MESSAGE = "Non posso aiutarti in questo. Posso scegliere dei colori.";
 const FALLBACK_REPROMPT = "Come posso aiutarti?";
 const STOP_MESSAGE = "Arrivederci!";
-
-const GetRandomColorHandler = {
-  canHandle(handlerInput: HandlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === "IntentRequest"
-      && request.intent.name === "RandomColor";
-  },
-  handle(handlerInput: HandlerInput) {
-    const request: ColorRequest = handlerInput.requestEnvelope.request as ColorRequest;
-    const randomFact = new ColorService(new ColorRepo())
-      .getRandomColor(parseInt(request.intent.slots.colorCount.value, 10)).join(", ");
-    const speechOutput = GET_FACT_MESSAGE + randomFact;
-
-    return handlerInput.responseBuilder
-      .speak(speechOutput)
-      .withSimpleCard(SKILL_NAME, randomFact)
-      .getResponse();
-  },
-};
 
 const HelpHandler = {
   canHandle(handlerInput: HandlerInput) {
@@ -115,7 +92,7 @@ const skillBuilder = SkillBuilders.custom();
 const handler = skillBuilder
   .addRequestHandlers(
     myContainer.get<ChoiceRequestHandler>(TYPES.ChoiceRequestHandler),
-    GetRandomColorHandler,
+    myContainer.get<RandomColorHandler>(TYPES.RandomColorHandler),
     HelpHandler,
     ExitHandler,
     FallbackHandler,

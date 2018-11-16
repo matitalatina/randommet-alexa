@@ -3,7 +3,7 @@ import { CustomSkillRequestHandler } from "ask-sdk-core/dist/dispatcher/request/
 import { Response } from "ask-sdk-model";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../di/types";
-import { ChoiceHandlerRequest } from "./ChoiceHandlerRequest";
+import { ChoiceRequest } from "./ChoiceRequest";
 import { ChoiceService } from "./ChoiceService";
 
 @injectable()
@@ -21,13 +21,11 @@ export class ChoiceRequestHandler implements CustomSkillRequestHandler {
   }
 
   public handle(input: HandlerInput): Response {
-    const request: ChoiceHandlerRequest = input.requestEnvelope.request as ChoiceHandlerRequest;
-    console.log(input.responseBuilder);
+    const request: ChoiceRequest = input.requestEnvelope.request as ChoiceRequest;
     const randomFact = this.choiceService.chooseElementFromQuery(
       1,
       request.intent.slots.choiceQuery.value,
     );
-    console.log(randomFact);
     const speechOutput = "Ecco qui la scelta: " + randomFact.join(", ");
 
     return input.responseBuilder
