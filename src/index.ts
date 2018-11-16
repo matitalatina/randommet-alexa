@@ -9,6 +9,7 @@ import "source-map-support/register";
 import { RandomColorHandler } from "./colors/RandomColorHandler";
 import { myContainer } from "./di/inversify.config";
 import { TYPES } from "./di/types";
+import { OracleHandler } from "./oracle/OracleHandler";
 
 const HELP_MESSAGE = "Scegli un colore";
 const HELP_REPROMPT = "Come posso aiutarti?";
@@ -93,6 +94,7 @@ const handler = skillBuilder
   .addRequestHandlers(
     myContainer.get<ChoiceRequestHandler>(TYPES.ChoiceRequestHandler),
     myContainer.get<RandomColorHandler>(TYPES.RandomColorHandler),
+    myContainer.get<OracleHandler>(TYPES.OracleHandler),
     HelpHandler,
     ExitHandler,
     FallbackHandler,

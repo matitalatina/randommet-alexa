@@ -3,6 +3,7 @@ import { ChoiceRequestHandler } from "../choice/ChoiceRequestHandler";
 import { ChoiceService } from "../choice/ChoiceService";
 import { ColorRepo } from "../colors/ColorRepo";
 import { ColorService } from "../colors/ColorService";
+import { OracleHandler } from "../oracle/OracleHandler";
 import { OracleRepo } from "../oracle/OracleRepo";
 import { OracleService } from "../oracle/OracleService";
 import { RandomColorHandler } from "./../colors/RandomColorHandler";
@@ -14,6 +15,7 @@ myContainer.bind<ChoiceRequestHandler>(TYPES.ChoiceRequestHandler).to(ChoiceRequ
 myContainer.bind<ChoiceService>(TYPES.ChoiceService).to(ChoiceService);
 myContainer.bind<ColorRepo>(TYPES.ColorRepo).to(ColorRepo);
 myContainer.bind<ColorService>(TYPES.ColorService).to(ColorService);
+myContainer.bind<OracleHandler>(TYPES.OracleHandler).to(OracleHandler);
 myContainer.bind<OracleRepo>(TYPES.OracleRepo).to(OracleRepo);
 myContainer.bind<OracleService>(TYPES.OracleService).to(OracleService);
 myContainer.bind<RandomColorHandler>(TYPES.RandomColorHandler).to(RandomColorHandler);
