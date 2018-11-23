@@ -11,7 +11,7 @@ import { myContainer } from "./di/inversify.config";
 import { TYPES } from "./di/types";
 import { OracleHandler } from "./oracle/OracleHandler";
 
-const HELP_MESSAGE = "Scegli un colore";
+const HELP_MESSAGE = "Ciao! Per usarmi prova a chiedermi di scegliere dei colori, oppure chiedimi di scegliere un elemento da una lista.";
 const HELP_REPROMPT = "Come posso aiutarti?";
 const FALLBACK_MESSAGE = "Non posso aiutarti in questo. Posso scegliere dei colori.";
 const FALLBACK_REPROMPT = "Come posso aiutarti?";
@@ -20,8 +20,8 @@ const STOP_MESSAGE = "Arrivederci!";
 const HelpHandler = {
   canHandle(handlerInput: HandlerInput) {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === "IntentRequest"
-      && request.intent.name === "AMAZON.HelpIntent";
+    return (request.type === "IntentRequest"
+      && request.intent.name === "AMAZON.HelpIntent") || request.type === "LaunchRequest";
   },
   handle(handlerInput: HandlerInput) {
     return handlerInput.responseBuilder
